@@ -1,0 +1,27 @@
+mongodb:
+  uri: mongodb+srv://kpra123_db_user:ZuZQZM7ckyWhg5DH@mongotestcluster.hhqrmgw.mongodb.net/?appName=MongoTestCluster
+  database: sample_airbnb
+
+prometheus:
+  pushGatewayUrl: http://localhost:9091
+  jobName: mongo_metrics
+  
+metrics:
+  - name: house_count
+    help: "Total House"
+    collection: listingsAndReviews
+    query: |
+      [
+        {
+          $match: {
+            property_type: "House"
+          }
+        },
+        {
+          $count: "total"
+        }
+      ]
+    type: gauge
+    labels:
+      env: prod
+      team: core
